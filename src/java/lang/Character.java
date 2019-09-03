@@ -4585,6 +4585,7 @@ class Character implements java.io.Serializable, Comparable<Character> {
      * @since  1.5
      */
     public static Character valueOf(char c) {
+        /// char 的缓存从 \u005Cu0000(0) 到 \u005Cu007F(127)
         if (c <= 127) { // must cache
             return CharacterCache.cache[(int)c];
         }
