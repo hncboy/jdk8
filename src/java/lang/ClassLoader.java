@@ -403,13 +403,16 @@ public abstract class ClassLoader {
     {
         synchronized (getClassLoadingLock(name)) {
             // First, check if the class has already been loaded
+            /// 首先检查这个类是否已经被加载过
             Class<?> c = findLoadedClass(name);
             if (c == null) {
                 long t0 = System.nanoTime();
                 try {
+                    /// 双亲委派，递归获取父类加载器
                     if (parent != null) {
                         c = parent.loadClass(name, false);
                     } else {
+                        /// 寻找 Bootstrap ClassLoader 加载器
                         c = findBootstrapClassOrNull(name);
                     }
                 } catch (ClassNotFoundException e) {
@@ -418,17 +421,20 @@ public abstract class ClassLoader {
                 }
 
                 if (c == null) {
+                    /// 如果没找到这个类，通过 findClass 查找
                     // If still not found, then invoke findClass in order
                     // to find the class.
                     long t1 = System.nanoTime();
                     c = findClass(name);
 
+                    /// 记录 jvm 统计数据
                     // this is the defining class loader; record the stats
                     sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
                     sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
                     sun.misc.PerfCounter.getFindClasses().increment();
                 }
             }
+            /// 连接类
             if (resolve) {
                 resolveClass(c);
             }
