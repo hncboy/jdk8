@@ -110,7 +110,16 @@ import java.util.regex.PatternSyntaxException;
 
 public final class String
     implements java.io.Serializable, Comparable<String>, CharSequence {
-    /** The value is used for character storage. */
+
+    /**++
+     * The value is used for character storage.
+     * 使用 char 来存储，声明为 final，表示 String 是不可变的。
+     * 优势：
+     * 1.缓存 hash 值，不变的特性使得 hash 值只需要进行一次计算
+     * 2.创建过的 String 对象，可以从 String pool 中取得引用
+     * 3.安全
+     * 4.线程安全
+     */
     private final char value[];
 
     /** Cache the hash code for the string */
@@ -138,7 +147,11 @@ public final class String
         this.value = "".value;
     }
 
-    /**
+    /**++
+     * 使用 new String("abc") 会创建两个字符串对象（前提是 String pool 中不存在 abc）
+     * 1.在编译期间会在 String pool 中创建一个字符串对象指向 "abc" 字符串字面量
+     * 2.new 的方式会在堆中创建一个 String 对象
+     *
      * Initializes a newly created {@code String} object so that it represents
      * the same sequence of characters as the argument; in other words, the
      * newly created string is a copy of the argument string. Unless an
@@ -3141,8 +3154,9 @@ public final class String
         return Double.toString(d);
     }
 
-    /**
+    /**++
      * Returns a canonical representation for the string object.
+     * 调用底层的方法
      * <p>
      * A pool of strings, initially empty, is maintained privately by the
      * class {@code String}.
@@ -3152,6 +3166,9 @@ public final class String
      * the {@link #equals(Object)} method, then the string from the pool is
      * returned. Otherwise, this {@code String} object is added to the
      * pool and a reference to this {@code String} object is returned.
+     * 当 intern 方法被调用的时候，如果在 pool 中已经存在一个字符串用 equals 比较是相等的，
+     * 则直接返回 pool 中的该对象。否则，将会在 pool 中添加新的对象并返回该对象的引用。
+     *
      * <p>
      * It follows that for any two strings {@code s} and {@code t},
      * {@code s.intern() == t.intern()} is {@code true}
