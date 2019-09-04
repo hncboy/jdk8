@@ -25,7 +25,9 @@
 
 package java.lang.annotation;
 
-/**
+/**++
+ * 表示这个注解可以自动被继承，如果一个 class 使用了 Inherited 修饰的 annotation，
+ * 那么这个 class 的子类也将使用该 annotation
  * Indicates that an annotation type is automatically inherited.  If
  * an Inherited meta-annotation is present on an annotation type
  * declaration, and the user queries the annotation type on a class
