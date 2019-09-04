@@ -52,7 +52,7 @@ import static java.lang.annotation.ElementType.*;
 @Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE})
 @Retention(RetentionPolicy.SOURCE)
 public @interface SuppressWarnings {
-    /**
+    /**++
      * The set of warnings that are to be suppressed by the compiler in the
      * annotated element.  Duplicate names are permitted.  The second and
      * successive occurrences of a name are ignored.  The presence of
@@ -61,6 +61,7 @@ public @interface SuppressWarnings {
      * free to emit a warning if an annotation contains an unrecognized
      * warning name.
      *
+     * 使用 unchecked 忽略无法识别的警告
      * <p> The string {@code "unchecked"} is used to suppress
      * unchecked warnings. Compiler vendors should document the
      * additional warning names they support in conjunction with this
