@@ -25,7 +25,8 @@
 
 package java.lang.annotation;
 
-/**
+/**++
+ * 定义该注解的生命周期，如果没有 Retention 注解，则默认为 RetentionPolicy.CLASS
  * Indicates how long annotations with the annotated type are to
  * be retained.  If no Retention annotation is present on
  * an annotation type declaration, the retention policy defaults to
